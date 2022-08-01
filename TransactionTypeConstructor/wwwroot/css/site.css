@@ -1,0 +1,31 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.btn-green {
+    background-color: #6ebb20;
+    border: none;
+    outline: none;
+    display: inline-block;
+    color: white;
+}
+
+    .btn-green:hover {
+        background-color: #49ab33;
+        color: white;
+    }

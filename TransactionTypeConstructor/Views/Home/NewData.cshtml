@@ -1,0 +1,261 @@
+﻿@model MainDataViewModel
+@{
+
+}
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<!--search -->
+<div class="container pt-5">
+    <form method="post" enctype="multipart/form-data" id="editForm" class="">
+        <div class="card card-success">
+            <div class="card-header myCardHeader">
+                <b>Məlumatlar</b>
+            </div>
+            <div class="card-body">
+                <input hidden asp-for="ConstructorData.ID" />
+                <div class="row pt-2">
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Göndərmənin növü</label>
+                        <select asp-for="ConstructorData.G_NOV" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.SendTypes)
+                            {
+                                if (Model.ConstructorData.G_NOV == item.ID)
+                                {
+                                    <option value="@item.ID">@item.ID - @item.NAME</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.ID">@item.ID - @item.NAME</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Sürətli pul köçürtməsi</label>
+                        <select asp-for="ConstructorData.SPK_SYSTEM" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.SpkDatas)
+                            {
+                                if (Model.ConstructorData.SPK_SYSTEM == item.KOD)
+                                {
+                                    <option value="@item.KOD">@item.KOD - @item.ADI</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.KOD">@item.KOD - @item.ADI</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="form-group-sm-sm col-md-6 row">
+                        <label class="col-md-5">Spk mədaxil/məxaric</label>
+                        <select asp-for="ConstructorData.SPK_TR_TYPE" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @if (@Model.ConstructorData.SPK_TR_TYPE != "1" && @Model.ConstructorData.SPK_TR_TYPE != "0")
+                            {
+
+                                <option value="0">0 - mədaxil</option>
+                                <option value="1">1 - məxaric</option>
+                            }
+                            else if (@Model.ConstructorData.SPK_TR_TYPE == "1")
+                            {
+                                <option value="0">0 - mədaxil</option>
+                                <option selected value="1">1 - məxaric</option>
+                            }
+                            else
+                            {
+                                <option selected value="0">0 - mədaxil</option>
+                                <option value="1">1 - məxaric</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group-sm-sm col-md-6 row">
+                        <label class="col-md-5">Ödənişin növü</label>
+                        <select asp-for="ConstructorData.TRN_TYPE" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.TransactionTypes.OrderBy(x=>x.ID))
+                            {
+                                if (Model.ConstructorData.TRN_TYPE == item.ID)
+                                {
+                                    <option value="@item.ID">@item.DESCRIPTION</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.ID">@item.DESCRIPTION</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-success ">
+            <div class="card-header myCardHeader">
+                <b>Debet</b>
+            </div>
+            <div class="card-body">
+                <div class="row pt-2">
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Hesab növü</label>
+                        <select asp-for="ConstructorData.DB_HES_NOV" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.AccountTypes)
+                            {
+                                if (Model.ConstructorData.DB_HES_NOV == item.HES_NOV)
+                                {
+                                    <option selected value="@item.HES_NOV">@item.HES_NOV - @item.NOV_AD</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.HES_NOV">@item.HES_NOV - @item.NOV_AD</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Balans növü</label>
+                        <select asp-for="ConstructorData.DB_BAL" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.BalanceInfos)
+                            {
+                                if (Model.ConstructorData.DB_BAL == item.KOD_BAL)
+                                {
+                                    <option selected value="@item.KOD_BAL">@item.KOD_BAL - @item.BAL_AD</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.KOD_BAL">@item.KOD_BAL - @item.BAL_AD</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row pt-2">
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Qeydiyyat nömrəsi</label>
+                        <input id="debet_owner" class="form-control form-control-sm col-md-7" asp-for="ConstructorData.DB_OWNER" value="" />
+                    </div>
+                    <div class="form-group-sm-sm col-md-6 row">
+                        <label class="col-md-5">Valyuta</label>
+                        <select asp-for="ConstructorData.DB_CURRENCY" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.Currencies)
+                            {
+                                if (Model.ConstructorData.DB_CURRENCY == item.VALQ_AD)
+                                {
+                                    <option selected value="@item.VALQ_AD">@item.VALQ_AD</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.VALQ_AD">@item.VALQ_AD</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Hesab</label>
+                        <input id="debet_hesab" class="form-control form-control-sm col-md-7" asp-for="ConstructorData.DB_ACCOUNT" value="" />
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-success ">
+            <div class="card-header myCardHeader">
+                <b>Kredit</b>
+            </div>
+            <div class="card-body">
+                <div class="row pt-2">
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Hesab növü</label>
+                        <select asp-for="ConstructorData.CR_HES_NOV" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.AccountTypes)
+                            {
+                                if (Model.ConstructorData.CR_HES_NOV == item.HES_NOV)
+                                {
+                                    <option selected value="@item.HES_NOV">@item.HES_NOV - @item.NOV_AD</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.HES_NOV">@item.HES_NOV - @item.NOV_AD</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Balans növü</label>
+                        <select asp-for="ConstructorData.CR_BAL" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.BalanceInfos)
+                            {
+                                if (Model.ConstructorData.CR_BAL == item.KOD_BAL)
+                                {
+                                    <option selected value="@item.KOD_BAL">@item.KOD_BAL - @item.BAL_AD</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.KOD_BAL">@item.KOD_BAL - @item.BAL_AD</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="form-group-sm-sm col-md-6 row">
+                        <label class="col-md-5">Qeydiyyat nömrəsi</label>
+                        <input id="credit_owner" class="form-control form-control-sm col-md-7" asp-for="ConstructorData.CR_OWNER" value="" />
+                    </div>
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-5">Valyuta</label>
+                        <select asp-for="ConstructorData.CR_CURRENCY" class="form-control form-control-sm col-md-7">
+                            <option value="">--</option>
+                            @foreach (var item in Model.Currencies)
+                            {
+                                if (Model.ConstructorData.CR_CURRENCY == item.VALQ_AD)
+                                {
+                                    <option selected value="@item.VALQ_AD">@item.VALQ_AD</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.VALQ_AD">@item.VALQ_AD</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row pt-2">
+                    <div class="form-group-sm-sm col-md-6 row">
+                        <label class="col-md-5">Hesab</label>
+                        <input id="credit_hesab" class="form-control form-control-sm col-md-7" asp-for="ConstructorData.CR_ACCOUNT" value="" />
+                    </div>
+                    <div class="form-group-sm-sm col-md-6 row">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <button id="formEditBtn" class="btn btn-success float-end mt-4" asp-action="AddNewData" asp-controller="Home" type="submit">Yadda Saxla</button>
+        <button class="btn btn-primary float-end mt-4 mr-3" asp-action="Index" asp-controller="Home" type="submit">Imtina</button>
+    </form>
+
+</div>
+<script>
+</script>

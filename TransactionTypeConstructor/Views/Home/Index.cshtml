@@ -1,0 +1,122 @@
+﻿@model MainDataViewModel
+@{
+}
+<style>
+
+    th, td {
+        border-style: solid;
+        border-width: 5px;
+        border-color: #BCBCBC;
+        word-wrap: break-word;
+    }
+</style>
+
+<body class="hold-transition sidebar-mini">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <form>
+                        <div class="card-body ml-2" style="width:95%">
+                            <div class="input-group mb-3" style="width:25%">
+                                <input maxlength="10" id="inputForGettingTrnType" type="text" class="form-control" placeholder="Ödəniş id" aria-label="Ödəniş id" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button id="btnForGettingTrnType" class="btn btn-primary" type="button">Yoxla</button>
+                                </div>
+                            </div>
+                            <table style="table-layout:fixed; width:100%; font-size:80%" id="mainDataTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Göndərmənin növü</th>
+                                        <th class="text-center">Debet hesab növü</th>
+                                        <th class="text-center">Debet balans növü</th>
+                                        <th class="text-center">Debet qeydiyyat nömrəsi</th>
+                                        <th class="text-center">Debet valyuta</th>
+                                        <th class="text-center">Debet hesab</th>
+                                        <th class="text-center">Credit hesab növü</th>
+                                        <th class="text-center">Credit balans növü</th>
+                                        <th class="text-center">Credit qeydiyyat nömrəsi</th>
+                                        <th class="text-center">Credit valyuta</th>
+                                        <th class="text-center">Credit hesab</th>
+                                        <th class="text-center">Sürətli pul köçürtməsi</th>
+                                        <th class="text-center">Spk mədaxil /məxaric</th>
+                                        <th class="text-center">Ödənişin növü</th>
+                                        <th class="text-center">Dəyiş /Sil</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var m in Model.ConstructorDatas)
+                                    {
+                                        <tr>
+                                            <td class="text-center">@m.G_NOV</td>
+                                            <td class="text-center">@m.DB_HES_NOV</td>
+                                            <td class="text-center">@m.DB_BAL</td>
+                                            <td class="text-center">@m.DB_OWNER</td>
+                                            <td class="text-center">@m.DB_CURRENCY</td>
+                                            <td class="text-center">@m.DB_ACCOUNT</td>
+                                            <td class="text-center">@m.CR_HES_NOV</td>
+                                            <td class="text-center">@m.CR_BAL</td>
+                                            <td class="text-center">@m.CR_OWNER</td>
+                                            <td class="text-center">@m.CR_CURRENCY</td>
+                                            <td class="text-center">@m.CR_ACCOUNT</td>
+                                            <td class="text-center">@m.SPK_SYSTEM</td>
+                                            <td class="text-center">@m.SPK_TR_TYPE</td>
+                                            <td class="text-center">@m.TRN_TYPE</td>
+                                            <td class="text-center">
+                                                <div class="d-flex justify-content-between">
+                                                    <button asp-controller="Home" asp-action="EditData" name="IdForEdit" type="submit" value="@m.ID" class="btn btn-sm btn-outline-success"><i class="fas fa-edit"></i></button>
+                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal_@(m.ID)" type="button" class="ml-2 btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal_@(m.ID)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Diqqətlə oxuyun!</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Seçilmiş qaydanı silməyə əminsiniz?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">İmtina</button>
+                                                        <button asp-controller="Home" asp-action="DeleteData" type="submit" name="IdForDelete" value="@m.ID" class="btn btn-danger">Sil</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center">Növ</th>
+                                        <th class="text-center">Debet hesab növü</th>
+                                        <th class="text-center">Debet balans növü</th>
+                                        <th class="text-center">Debet qeydiyyat nömrəsi</th>
+                                        <th class="text-center">Debet valyuta</th>
+                                        <th class="text-center">Debet hesab</th>
+                                        <th class="text-center">Credit hesab növü</th>
+                                        <th class="text-center">Credit balans növü</th>
+                                        <th class="text-center">Credit qeydiyyat nömrəsi</th>
+                                        <th class="text-center">Credit valyuta</th>
+                                        <th class="text-center">Credit hesab</th>
+                                        <th class="text-center">Sürətli pul köçürtməsi</th>
+                                        <th class="text-center">Spk mədaxil /məxaric</th>
+                                        <th class="text-center">Ödənişin növü</th>
+                                        <th class="text-center">Dəyiş / Sil</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+    </script>
+</body>

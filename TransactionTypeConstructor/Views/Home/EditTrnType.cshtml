@@ -1,0 +1,31 @@
+﻿@model TransactionType
+@{
+
+}
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+
+<!--search -->
+<div class="container pt-5">
+    <form method="post" enctype="multipart/form-data" id="editForm" class="">
+        <div class="card card-success">
+            <div class="card-header myCardHeader">
+                <b>Dəyişdiriləcək müxabirləşmə novü</b>
+            </div>
+            <div class="card-body">
+                <input hidden asp-for="ID" />
+                <div class="row pt-2">
+                    <div class="form-group-sm col-md-6 row">
+                        <label class="col-md-6">Müxabirləşmə novü</label>
+                        <input class="form-control form-control-sm col-md-6" asp-for="DESCRIPTION" value="@Model.DESCRIPTION" />
+                    </div>                    
+                    </div>
+                </div>
+            </div>
+            <button id="formEditBtn" class="btn btn-success float-end mt-4" asp-action="EditTrnType" asp-controller="Home" type="submit">Yadda Saxla</button>
+            <button class="btn btn-primary float-end mt-4 mr-3" asp-action="TrnTypes" asp-controller="Home" type="submit">Imtina</button>
+    </form>
+</div>

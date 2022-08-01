@@ -1,0 +1,107 @@
+﻿@model MainDataViewModel
+@{
+}
+<style>
+
+    th, td {
+        border-style: solid;
+        border-width: 5px;
+        border-color: #BCBCBC;
+        word-wrap: break-word;
+    }
+</style>
+
+<body class="hold-transition sidebar-mini">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <form>
+                        <div class="card-body ml-2" style="width:95%">
+                            <button style="width:15%" id="btnForOpenModalTrn" class="btn btn-primary mb-3" type="button">+ Yeni ödəniş növü</button>
+                            <table style="table-layout:fixed; width:100%; font-size:80%" id="mainDataTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">Ödəniş növləri</th>
+                                        <th class="text-center">Dəyiş /Sil</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var m in Model.TransactionTypes.OrderByDescending(x => x.ID))
+                                    {
+                                        <tr>
+                                            <td class="text-center">@m.DESCRIPTION</td>
+                                            <td class="text-center">
+                                                <div class="d-flex justify-content-center">
+                                                    <button asp-controller="Home" asp-action="EditTrnType" name="IdForEditTrn" type="submit" value="@m.ID" class="mr-2 btn btn-sm btn-outline-success"><i class="fas fa-edit"></i></button>
+                                                    <button data-bs-toggle="modal" data-bs-target="#exampleModal_@(m.ID)" type="button" class="ml-2 btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal_@(m.ID)" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Diqqətlə oxuyun!</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        "@m.DESCRIPTION" adlı müxabirləşmə növünü silməyə əminsiniz?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">İmtina</button>
+                                                        <button asp-controller="Home" asp-action="DeleteTrnType" type="submit" name="IdForDeleteTrn" value="@m.ID" class="btn btn-danger">Sil</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="text-center">Ödəniş növləri</th>
+                                        <th class="text-center">Dəyiş /sil</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div id="myModal" class="modal fade" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <div class="card card-success">
+                                            <div class="card-header myCardHeader">
+                                                <b>Yeni müxabirləşmə novünü daxil edin</b>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row pt-2">
+
+                                                    <input type="text" name="trnInput_description" class="form-control form-control-sm" value="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button id="modalCancelBtn" type="button" class="btn btn-primary" data-dismiss="modal">Imtina</button>
+                                        <button asp-action="AddNewTrnType" asp-controller="Home" type="submit" class="btn btn-success">Yadda saxla</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+
+    </script>
+</body>
